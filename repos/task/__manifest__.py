@@ -5,7 +5,7 @@
     'depends': ['base', 'calendar'],
     'data': [
         'views/task_views.xml',
-        'security/groups.xml',
+     #   'security/groups.xml',
         'security/ir.model.access.csv'],
 
 }
