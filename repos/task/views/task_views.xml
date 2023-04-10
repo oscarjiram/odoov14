@@ -3,7 +3,7 @@
     <record id='tarea_prueba_action' model='ir.actions.act_window'>
         <field name="name">Tareas</field>
         <field name="res_model">tarea.prueba</field>
-        <field name="view_mode">tree,form,kanban</field>
+        <field name="view_mode">tree,form<!--,calendar--></field>
     </record>
 
     <menuitem name="Mi lista de tareas" id="tareas_base_menu" />
@@ -15,35 +15,27 @@
         <field name="model">tarea.prueba</field>
         <field name="arch" type="xml">
         <form>
-            <group>
+             <header>
+                <field name="state"/>
+                <button name="action_iniciar" string="Iniciar" states="pendiente,pausada" type="object"/>
+                <button name="action_pausar" string="Pausar" states="progreso" type="object"/>
+                <button name="action_finalizar" string="Finalizar" states="progreso,pausada" type="object"/>
+                <field name="state" widget="statusbar" statusbar_visible="pendiente,progreso,pausada,finalizada"/>
+            </header>
+            <sheet>
+               <group>
                 <field name="name"/>
                 <field name="description"/>
                 <field name="deadline"/>
                 <field name="duration"/>
-            </group>
-            <group>
                 <field name="user_id"/>
             </group>
-            <group>
-                <field name="state"/>
-            </group>
-            <header>
-                <button name="action_iniciar" string="Iniciar" states="pendiente"/>
-                <button name="action_pausar" string="Pausar" states="progreso"/>
-                <button name="action_finalizar" string="Finalizar" states="progreso,pausada"/>
-            </header>
-            <sheet>
-                <group>
-                    <field name="name"/>
-                    <field name="description"/>
-                    <field name="state" widget="statusbar" statusbar_visible="pendiente,progreso,pausada,finalizada"/>
-                </group>
             </sheet>
         </form>
         </field>
     </record>
 
-        <record id="tarea_prueba_view_tree" model="ir.ui.view">
+    <record id="tarea_prueba_view_tree" model="ir.ui.view">
             <field name="name">Vista arbol de tareas</field>
             <field name="model">tarea.prueba</field>
             <field name="arch" type="xml">
@@ -67,32 +59,25 @@
                 <field name="description"/>
                 <field name="deadline"/>
                 <field name="duration"/>
+                <field name="user_id"/>
             </search>
         </field>
     </record>
 
-    <record model="ir.ui.view" id="tarea_vista_kanban">
-    <field name="name">Tarjeta de tareas</field>
-    <field name="model">tarea.prueba</field>
-    <field name="arch" type="xml">
-        <kanban>
-            <field name="name" />
-            <field name="description" />
-            <field name="duration" />
-            <field name="name" />
-            <templates>
-                <t t-name="kanban-box">
-                    <div class="oe_kanban_content">
-                        <div>
-                            <field name="name" />
-                        </div>
-                        <div>
-                            <field name="description" />
-                        </div>
-                    </div>
-                </t>
-            </templates>
-        </kanban>
-    </field>
-</record>
+   <!-- <record model="ir.ui.view" id="tarea_prueba_view_calendar">
+        <field name="name">Vista de calendario de tareas</field>
+        <field name="model">tarea.prueba</field>
+        <field name="arch" type="xml">
+            <calendar string="Tareas" date_start="deadline" date_stop="deadline" default_group_by="user_id">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="user_id"/>
+                <field name="deadline"/>
+                <field name="duration"/>
+                <field name="state"/>
+            </calendar>
+        </field>
+    </record>-->
+
 </odoo>
+
